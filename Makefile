@@ -9,16 +9,16 @@ PTHREADSFLAGS=-pthread
 BINDIR=bin/
 
 TARGETS= \
-	$(BINDIR)mpi-test \
-	$(BINDIR)mpi-test2
+	$(BINDIR)print-rank \
+	$(BINDIR)prime-count
 
 .PHONY: all
 all: $(TARGETS)
 
-$(BINDIR)mpi-test: mpi-test.c
+$(BINDIR)print-rank: print-rank.c
 	$(MPICC) $(MPICFLAGS) -o $@ $^
 
-$(BINDIR)mpi-test2: mpi-test2.c
+$(BINDIR)prime-count: prime-count.c
 	$(MPICC) $(MPICFLAGS) $(PTHREADSFLAGS) -o $@ $^
 
 .PHONY: clean

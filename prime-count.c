@@ -187,7 +187,7 @@ int main(int argc, char* argv[]) {
 		}
 		if (invalid_argument || help) {
 			if (invalid_argument) fputs("invalid argument.\n", stderr);
-			fprintf(stderr, "Usage: %s [options]\n", argc > 0 ? argv[0] : "mpi-test2");
+			fprintf(stderr, "Usage: %s [options]\n", argc > 0 ? argv[0] : "prime-count");
 			fputs("\noptions:\n", stderr);
 			fputs("--from num / -f num : set number to begin with\n", stderr);
 			fputs("--to num / -t num : set number to end with\n", stderr);
