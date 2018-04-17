@@ -156,6 +156,7 @@ void* crunch_work(void* placeholder) {
 int main(int argc, char* argv[]) {
 	int rank, size;
 	int is_sender;
+	int work_valid = 1;
 	pthread_t send_thread, fetch_thread, crunch_thread;
 	MPI_Init(&argc, &argv);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -194,14 +195,16 @@ int main(int argc, char* argv[]) {
 			fputs("--chunk num / -c num : set chunk size\n", stderr);
 			fputs("--queue num / -q num : set queue1 size\n", stderr);
 			fputs("--help / -h : show this help\n", stderr);
-			MPI_Finalize();
-			return 1;
-		}
-		if (size <= 1) {
+			work_valid = 0;
+		} else if (size <= 1) {
 			fputs("sorry, this program requires at least 2 nodes to do calculation\n", stderr);
-			MPI_Finalize();
-			return 1;
+			work_valid = 0;
 		}
+	}
+	MPI_Bcast(&work_valid, 1, MPI_INT, size - 1, MPI_COMM_WORLD);
+	if (!work_valid) {
+		MPI_Finalize();
+		return 1;
 	}
 
 	MPI_Bcast(&queue_size, 1, MPI_INT, size - 1, MPI_COMM_WORLD);
