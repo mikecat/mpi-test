@@ -12,7 +12,8 @@ TARGETS= \
 	$(BINDIR)print-rank \
 	$(BINDIR)prime-count \
 	$(BINDIR)prime-count-openmp \
-	$(BINDIR)prime-count2
+	$(BINDIR)prime-count2 \
+	$(BINDIR)print-rank-omp \
 
 .PHONY: all
 all: $(TARGETS)
@@ -28,6 +29,9 @@ $(BINDIR)prime-count-openmp: prime-count-openmp.c
 
 $(BINDIR)prime-count2: prime-count2.c
 	$(MPICC) $(MPICFLAGS) $(PTHREADSFLAGS) -o $@ $^
+
+$(BINDIR)print-rank-omp: print-rank-omp.c
+	$(MPICC) $(MPICFLAGS) $(OPENMPFLAGS) -o $@ $^
 
 .PHONY: clean
 clean:
