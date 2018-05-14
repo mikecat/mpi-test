@@ -14,6 +14,7 @@ TARGETS= \
 	$(BINDIR)prime-count-openmp \
 	$(BINDIR)prime-count2 \
 	$(BINDIR)print-rank-omp \
+	$(BINDIR)vector
 
 .PHONY: all
 all: $(TARGETS)
@@ -31,6 +32,9 @@ $(BINDIR)prime-count2: prime-count2.c
 	$(MPICC) $(MPICFLAGS) $(PTHREADSFLAGS) -o $@ $^
 
 $(BINDIR)print-rank-omp: print-rank-omp.c
+	$(MPICC) $(MPICFLAGS) $(OPENMPFLAGS) -o $@ $^
+
+$(BINDIR)vector: vector.c
 	$(MPICC) $(MPICFLAGS) $(OPENMPFLAGS) -o $@ $^
 
 .PHONY: clean
